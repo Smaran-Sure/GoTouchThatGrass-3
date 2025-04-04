@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">GoTouchThatGrass-3</string>
+    <string name="challenge_image_description">Challenge image</string>
+    <string name="status_icon_description">Status icon</string>
+    <string name="streak_icon_description">Streak icon</string>
+    <string name="preview_image_description">Preview of captured image</string>
+    <string name="welcome_message">Welcome to GoTouchThatGrass!</string>
+    <string name="last_challenge_time">Last challenge: %1$s</string>
+    <string name="current_streak">Current Streak</string>
+    <string name="total_challenges">Total Challenges</string>
+    <string name="success_rate">Success Rate</string>
+    <string name="last_challenge_date">Last challenge: %1$s</string>
+    <string name="no_challenges_yet">No challenges completed yet</string>
+    <string name="challenge_history">Challenge History</string>
+    <string name="no_challenge_history">No challenge history available</string>
+    <string name="success">Success</string>
+    <string name="failure">Failure</string>
+    
+    <!-- Home Fragment -->
+    <string name="challenge_completed_today">You have completed your challenge today!</string>
+    <string name="challenge_needed_today">You need to complete your challenge today</string>
+    <string name="challenge_again">Challenge Again</string>
+    <string name="start_challenge">Start Challenge</string>
+    <string name="start_first_challenge">Start First Challenge</string>
+    <string name="blocked_apps_list_with_more">%1$s and %2$d more</string>
+    <string name="blocked_apps_label">Blocked Apps</string>
+    
+    <!-- Grass Detection Activity -->
+    <string name="take_photo">Take Photo</string>
+    <string name="confirm">Confirm</string>
+    <string name="retry">Retry</string>
+    <string name="take_photo_instruction">Take a photo of grass to unblock your apps</string>
+    
+    <!-- Settings Activity -->
+    <string name="notifications">Notifications</string>
+    <string name="enable_daily_reminders">Enable daily reminders</string>
+    <string name="notification_time">Notification time</string>
+    <string name="streak">Streak</string>
+    <string name="reset_streak">Reset Streak</string>
+    <string name="about">About</string>
+    <string name="about_app">About App</string>
+    <string name="reset_streak_title">Reset Streak</string>
+    <string name="reset_streak_message">Are you sure you want to reset your streak to zero?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="streak_reset">Streak has been reset</string>
+    <string name="about_title">About GoTouchThatGrass</string>
+    <string name="about_message">GoTouchThatGrass is an app that encourages you to go outside and touch grass by blocking your selected apps until you complete a daily challenge.</string>
+    <string name="ok">OK</string>
+    
+    <!-- Blocked Apps Fragment -->
+    <string name="currently_blocked_apps">Currently Blocked Apps</string>
+    <string name="no_blocked_apps">No apps are currently blocked</string>
+    <string name="unblock_all">Unblock All</string>
+    <string name="available_apps">Available Apps</string>
+    <string name="search_apps">Search apps...</string>
+    <string name="app_icon_description">App icon</string>
+    <string name="block">Block</string>
+    <string name="unblock">Unblock</string>
+    
+    <!-- Plurals for streak -->
+    <plurals name="day_streak">
+        <item quantity="one">%d day streak</item>
+        <item quantity="other">%d day streak</item>
+    </plurals>
+    
+    <!-- Navigation -->
+    <string name="title_home">Home</string>
+    <string name="title_stats">Statistics</string>
+    <string name="title_blocked_apps">Blocked Apps</string>
+    <string name="title_settings">Settings</string>
+</resources>
