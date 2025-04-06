@@ -195,14 +195,19 @@ class GrassDetectionActivity : AppCompatActivity() {
     }
 
     private suspend fun saveChallenge(photoPath: String, successful: Boolean) {
-        val challenge = Challenge(
-            photoPath = photoPath,
-            isSuccessful = successful,
-            notes = ""
-        )
+        try {
+            val challenge = Challenge(
+                photoPath = photoPath.ifEmpty { "" },  // Ensure photoPath is never null
+                isSuccessful = successful,
+                notes = ""
+            )
 
-        withContext(Dispatchers.IO) {
-            appDatabase.challengeDao().insert(challenge)
+            withContext(Dispatchers.IO) {
+                appDatabase.challengeDao().insert(challenge)
+            }
+        } catch (e: Exception) {
+            // Log the error but don't crash
+            e.printStackTrace()
         }
     }
 

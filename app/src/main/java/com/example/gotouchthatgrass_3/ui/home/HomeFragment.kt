@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import com.example.gotouchthatgrass_3.GrassDetectionActivity
 import com.example.gotouchthatgrass_3.R
 import com.example.gotouchthatgrass_3.databinding.FragmentHomeBinding
 import com.example.gotouchthatgrass_3.util.PreferenceManager
-import com.gotouchthatgrass.ui.home.HomeViewModel
+import com.example.gotouchthatgrass_3.ui.home.HomeViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -101,27 +103,29 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeBlockedApps() {
-        homeViewModel.getBlockedApps().observe(viewLifecycleOwner) { apps ->
-            if (apps.isEmpty()) {
-                binding.blockedAppsContainer.visibility = View.GONE
-                binding.noBlockedAppsText.visibility = View.VISIBLE
-            } else {
-                binding.blockedAppsContainer.visibility = View.VISIBLE
-                binding.noBlockedAppsText.visibility = View.GONE
-                binding.blockedAppsCount.text = apps.size.toString()
-
-                // Display the first 3 app names
-                val displayNames = apps.take(3).joinToString(", ") { it.appName }
-                val remainingCount = if (apps.size > 3) apps.size - 3 else 0
-
-                if (remainingCount > 0) {
-                    binding.blockedAppsNames.text = getString(
-                        R.string.blocked_apps_list_with_more,
-                        displayNames,
-                        remainingCount
-                    )
+        viewLifecycleOwner.lifecycleScope.launch {
+            homeViewModel.getBlockedApps().observe(viewLifecycleOwner) { apps ->
+                if (apps.isEmpty()) {
+                    binding.blockedAppsContainer.visibility = View.GONE
+                    binding.noBlockedAppsText.visibility = View.VISIBLE
                 } else {
-                    binding.blockedAppsNames.text = displayNames
+                    binding.blockedAppsContainer.visibility = View.VISIBLE
+                    binding.noBlockedAppsText.visibility = View.GONE
+                    binding.blockedAppsCount.text = apps.size.toString()
+
+                    // Display the first 3 app names
+                    val displayNames = apps.take(3).joinToString(", ") { it.appName }
+                    val remainingCount = if (apps.size > 3) apps.size - 3 else 0
+
+                    if (remainingCount > 0) {
+                        binding.blockedAppsNames.text = getString(
+                            R.string.blocked_apps_list_with_more,
+                            displayNames,
+                            remainingCount
+                        )
+                    } else {
+                        binding.blockedAppsNames.text = displayNames
+                    }
                 }
             }
         }

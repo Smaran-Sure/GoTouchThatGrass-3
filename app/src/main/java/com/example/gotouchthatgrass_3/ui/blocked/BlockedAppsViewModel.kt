@@ -16,6 +16,7 @@ class BlockedAppsViewModel(application: Application) : AndroidViewModel(applicat
     // LiveData of all blocked apps
     val blockedApps: LiveData<List<BlockedApp>> = blockedAppDao.getAllBlockedApps()
 
+
     /**
      * Adds an app to the block list
      *

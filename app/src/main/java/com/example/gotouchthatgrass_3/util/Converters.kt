@@ -18,4 +18,15 @@ class Converters {
     fun calendarToTimestamp(calendar: Calendar?): Long? {
         return calendar?.timeInMillis
     }
+    
+    // Additional converters for handling other types if needed
+    @TypeConverter
+    fun fromString(value: String?): Date? {
+        return value?.let { Date(it.toLongOrNull() ?: 0) }
+    }
+
+    @TypeConverter
+    fun dateToString(date: Date?): String? {
+        return date?.time?.toString()
+    }
 }

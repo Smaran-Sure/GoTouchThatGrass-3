@@ -13,20 +13,20 @@ interface ChallengeDao {
     fun getAllChallenges(): LiveData<List<Challenge>>
 
     @Query("SELECT * FROM challenges WHERE isSuccessful = 1 ORDER BY timestamp DESC LIMIT 1")
-    suspend fun getLastSuccessfulChallenge(): Challenge?
+    fun getLastSuccessfulChallenge(): Challenge?
 
-    @Insert
-    suspend fun insert(challenge: Challenge): Long
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(challenge: Challenge): Long
 
     @Update
-    suspend fun update(challenge: Challenge): Int
+    fun update(challenge: Challenge): Int
 
     @Delete
-    suspend fun delete(challenge: Challenge): Int
+    fun delete(challenge: Challenge): Int
 
     @Query("SELECT COUNT(*) FROM challenges WHERE isSuccessful = 1")
-    suspend fun getTotalSuccessfulChallenges(): Int
+    fun getTotalSuccessfulChallenges(): Int
 
-    @Query("SELECT COUNT(DISTINCT date) FROM challenges WHERE isSuccessful = 1")
-    suspend fun getCurrentStreak(): Int
+    @Query("SELECT COUNT(*) FROM challenges WHERE isSuccessful = 1")
+    fun getCurrentStreak(): Int
 }

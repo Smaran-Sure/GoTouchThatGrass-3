@@ -6,7 +6,7 @@
     <string name="preview_image_description">Preview of captured image</string>
     <string name="welcome_message">Welcome to GoTouchThatGrass!</string>
     <string name="last_challenge_time">Last challenge: %1$s</string>
-    <string name="current_streak">Current Streak</string>
+    <string name="current_streak">Current Streak %d</string>
     <string name="total_challenges">Total Challenges</string>
     <string name="success_rate">Success Rate</string>
     <string name="last_challenge_date">Last challenge: %1$s</string>

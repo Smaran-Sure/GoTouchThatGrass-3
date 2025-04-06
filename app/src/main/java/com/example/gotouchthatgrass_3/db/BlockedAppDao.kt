@@ -1,6 +1,7 @@
 package com.example.gotouchthatgrass_3.db
 
 // db/BlockedAppDao.kt
+import android.database.Cursor
 import androidx.lifecycle.LiveData
 
 import androidx.room.*
@@ -12,21 +13,20 @@ interface BlockedAppDao {
     fun getAllBlockedApps(): LiveData<List<BlockedApp>>
 
     @Query("SELECT * FROM blocked_apps WHERE isCurrentlyBlocked = 1")
-
     fun getCurrentlyBlockedApps(): LiveData<List<BlockedApp>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(app: BlockedApp): Long
+    fun insert(app: BlockedApp): Long
 
     @Update
-    suspend fun update(app: BlockedApp): Int
+    fun update(app: BlockedApp): Int
 
     @Delete
-    suspend fun delete(app: BlockedApp): Int
+    fun delete(app: BlockedApp): Int
 
     @Query("UPDATE blocked_apps SET isCurrentlyBlocked = 0 WHERE isCurrentlyBlocked = 1")
-    suspend fun unblockAllApps(): Int
+    fun unblockAllApps(): Int
 
     @Query("SELECT * FROM blocked_apps WHERE packageName = :packageName")
-    suspend fun getAppByPackageName(packageName: String): BlockedApp?
+    fun getAppByPackageName(packageName: String): BlockedApp?
 }

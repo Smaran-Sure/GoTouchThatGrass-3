@@ -1,18 +1,22 @@
 package com.example.gotouchthatgrass_3.ui.stats
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gotouchthatgrass_3.R
 import com.example.gotouchthatgrass_3.databinding.FragmentStatsBinding
 import com.example.gotouchthatgrass_3.models.Challenge
 import com.example.gotouchthatgrass_3.util.PreferenceManager
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlinx.coroutines.launch
 
 class StatsFragment : Fragment() {
 
@@ -139,6 +143,26 @@ class ChallengeHistoryAdapter : androidx.recyclerview.widget.ListAdapter<Challen
                 binding.notesText.text = challenge.notes
             } else {
                 binding.notesText.visibility = View.GONE
+            }
+            
+            // Handle the challenge image safely
+            try {
+                if (challenge.photoPath.isNotEmpty()) {
+                    val imgFile = File(challenge.photoPath)
+                    if (imgFile.exists()) {
+                        val bitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
+                        binding.challengeImage.setImageBitmap(bitmap)
+                    } else {
+                        // Set a placeholder if the file doesn't exist
+                        binding.challengeImage.setImageResource(R.drawable.ic_image)
+                    }
+                } else {
+                    // Set a placeholder if no photo path
+                    binding.challengeImage.setImageResource(R.drawable.ic_image)
+                }
+            } catch (e: Exception) {
+                // If anything goes wrong, use a placeholder
+                binding.challengeImage.setImageResource(R.drawable.ic_image)
             }
         }
     }
