@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gotouchthatgrass_3.R
 import com.example.gotouchthatgrass_3.databinding.FragmentBlockedAppsBinding
 import com.example.gotouchthatgrass_3.service.AppBlockerService
 
@@ -38,6 +39,15 @@ class BlockedAppsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Apply styles to UI elements
+        binding.blockedAppsTitle.setTextAppearance(R.style.TextAppearance_App_Headline)
+        binding.availableAppsTitle.setTextAppearance(R.style.TextAppearance_App_Headline)
+        binding.noBlockedAppsText.setTextAppearance(R.style.TextAppearance_App_Subtitle)
+        
+        // Set up button style
+        binding.btnUnblockAll.setBackgroundColor(resources.getColor(R.color.colorSecondary, null))
+        binding.btnUnblockAll.setTextColor(resources.getColor(R.color.white, null))
+        
         setupAppList()
         setupBlockedAppsList()
         setupSearch()
@@ -47,7 +57,7 @@ class BlockedAppsFragment : Fragment() {
 
         binding.btnUnblockAll.setOnClickListener {
             viewModel.unblockAllApps()
-            Toast.makeText(context, "All apps unblocked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.unblock_all), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -158,93 +168,6 @@ data class BlockedAppItem(
     val icon: android.graphics.drawable.Drawable
 )
 
-// Adapter for the app list
-class AppListAdapter(private val onBlockClick: (AppItem) -> Unit) :
-    androidx.recyclerview.widget.ListAdapter<AppItem, AppListAdapter.ViewHolder>(
-        object : androidx.recyclerview.widget.DiffUtil.ItemCallback<AppItem>() {
-            override fun areItemsTheSame(oldItem: AppItem, newItem: AppItem): Boolean {
-                return oldItem.packageName == newItem.packageName
-            }
+// Using the standalone AppListAdapter class from AppListAdapter.kt
 
-            override fun areContentsTheSame(oldItem: AppItem, newItem: AppItem): Boolean {
-                return oldItem == newItem
-            }
-        }
-    ) {
-
-    private var fullList = listOf<AppItem>()
-
-    override fun submitList(list: List<AppItem>?) {
-        super.submitList(list)
-        list?.let { fullList = it }
-    }
-
-    fun filter(query: String) {
-        val filteredList = if (query.isEmpty()) {
-            fullList
-        } else {
-            fullList.filter {
-                it.label.toString().lowercase().contains(query.lowercase())
-            }
-        }
-        super.submitList(filteredList)
-    }
-
-    inner class ViewHolder(val binding: com.example.gotouchthatgrass_3.databinding.ItemAppBinding) :
-        androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = com.example.gotouchthatgrass_3.databinding.ItemAppBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        return ViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val app = getItem(position)
-        holder.binding.apply {
-            appName.text = app.label
-            // Add a package name TextView if needed or remove this line
-            appIcon.setImageDrawable(app.icon)
-            blockButton.setOnClickListener { onBlockClick(app) }
-        }
-    }
-}
-
-// Adapter for the blocked apps list
-class BlockedAppAdapter(private val onUnblockClick: (BlockedAppItem) -> Unit) :
-    androidx.recyclerview.widget.ListAdapter<BlockedAppItem, BlockedAppAdapter.ViewHolder>(
-        object : androidx.recyclerview.widget.DiffUtil.ItemCallback<BlockedAppItem>() {
-            override fun areItemsTheSame(oldItem: BlockedAppItem, newItem: BlockedAppItem): Boolean {
-                return oldItem.packageName == newItem.packageName
-            }
-
-            override fun areContentsTheSame(oldItem: BlockedAppItem, newItem: BlockedAppItem): Boolean {
-                return oldItem == newItem
-            }
-        }
-    ) {
-
-    inner class ViewHolder(val binding: com.example.gotouchthatgrass_3.databinding.ItemBlockedAppBinding) :
-        androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = com.example.gotouchthatgrass_3.databinding.ItemBlockedAppBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        return ViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val app = getItem(position)
-        holder.binding.apply {
-            appName.text = app.appName
-            appIcon.setImageDrawable(app.icon)
-            unblockButton.setOnClickListener { onUnblockClick(app) }
-        }
-    }
-}
+// Using the standalone BlockedAppAdapter class from BlockedAppAdapter.kt

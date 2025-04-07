@@ -22,6 +22,7 @@ import com.example.gotouchthatgrass_3.util.GrassDetector
 import com.example.gotouchthatgrass_3.util.NotificationHelper
 import com.example.gotouchthatgrass_3.util.PreferenceManager
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -149,6 +150,7 @@ class GrassDetectionActivity : AppCompatActivity() {
         binding.progressBar.visibility = View.VISIBLE
         binding.confirmButton.isEnabled = false
         binding.retryButton.isEnabled = false
+        binding.instructionText.text = "Analyzing your photo..."
 
         lifecycleScope.launch {
             val photoFile = this@GrassDetectionActivity.photoFile ?: return@launch
@@ -158,7 +160,7 @@ class GrassDetectionActivity : AppCompatActivity() {
                 BitmapFactory.decodeFile(photoFile.absolutePath)
             }
 
-            // Check if the image contains grass
+            // Check if the image contains grass using both color detection and ML
             val containsGrass = grassDetector.isGrassInImage(bitmap)
 
             if (containsGrass) {
@@ -170,6 +172,16 @@ class GrassDetectionActivity : AppCompatActivity() {
 
                 // Update last challenge timestamp and streak
                 updateStreak()
+
+                // Show success animation or feedback
+                withContext(Dispatchers.Main) {
+                    binding.progressBar.visibility = View.GONE
+                    binding.instructionText.text = "Success! You've touched grass!"
+                    binding.instructionText.setBackgroundColor(resources.getColor(R.color.success_green, null))
+                }
+
+                // Delay to show the success message
+                delay(1500)
 
                 Toast.makeText(
                     this@GrassDetectionActivity,
@@ -184,6 +196,8 @@ class GrassDetectionActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.GONE
                 binding.confirmButton.isEnabled = true
                 binding.retryButton.isEnabled = true
+                binding.instructionText.text = "We couldn't detect grass. Try again!"
+                binding.instructionText.setBackgroundColor(resources.getColor(R.color.failure_red, null))
 
                 Toast.makeText(
                     this@GrassDetectionActivity,

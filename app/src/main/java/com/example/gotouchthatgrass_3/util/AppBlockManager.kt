@@ -25,7 +25,12 @@ class AppBlockManager(private val context: Context) {
     private val preferenceManager = PreferenceManager(context)
 
     suspend fun addAppToBlockList(packageName: String, appName: String) {
-        val blockedApp = BlockedApp(packageName, appName)
+        val blockedApp = BlockedApp(
+            packageName = packageName, 
+            appName = appName,
+            isCurrentlyBlocked = true,
+            blockStartTime = System.currentTimeMillis()
+        )
         blockedAppDao.insert(blockedApp)
     }
 

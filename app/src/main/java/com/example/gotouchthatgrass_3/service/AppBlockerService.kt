@@ -74,6 +74,12 @@ class AppBlockerService : Service() {
                     // Get the current foreground app
                     val foregroundApp = appBlockManager.getCurrentForegroundApp()
                     foregroundApp?.let { packageName ->
+                        // Skip our own app
+                        if (packageName == packageName) {
+                            delay(MONITOR_INTERVAL)
+                            return@let
+                        }
+                        
                         // Check if the app is in our block list
                         val blockedAppDao = appDatabase.blockedAppDao()
                         val blockedApp = blockedAppDao.getAppByPackageName(packageName)
@@ -85,12 +91,26 @@ class AppBlockerService : Service() {
                             val challengeCompleted = hasCompletedChallengeToday()
 
                             if (!challengeCompleted) {
+                                // Create a notification to inform the user
+                                val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                                val notification = NotificationCompat.Builder(this@AppBlockerService, CHANNEL_ID)
+                                    .setContentTitle("App Blocked")
+                                    .setContentText("Complete a grass challenge to unblock ${blockedApp.appName}")
+                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                    .setAutoCancel(true)
+                                    .build()
+                                
+                                notificationManager.notify(1002, notification)
+                                
                                 // Launch grass detection activity
                                 val intent = Intent(this@AppBlockerService, GrassDetectionActivity::class.java).apply {
                                     flags = Intent.FLAG_ACTIVITY_NEW_TASK
                                     putExtra("BLOCKED_APP_PACKAGE", packageName)
                                 }
                                 startActivity(intent)
+                                
+                                // Add a delay to prevent multiple launches
+                                delay(5000)
                             }
                         }
                     }

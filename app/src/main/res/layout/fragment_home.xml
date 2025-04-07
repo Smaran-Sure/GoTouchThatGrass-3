@@ -4,22 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="28dp"
+    android:animateLayoutChanges="true"
+    android:background="@color/off_white"
     tools:context=".ui.home.HomeFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/statusCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="20dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="1dp"
+        android:background="@drawable/card_background_premium"
+        android:stateListAnimator="@null"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="20dp">
 
             <ImageView
                 android:id="@+id/statusIcon"
@@ -37,6 +42,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/welcome_message"
                 android:textSize="16sp"
+                android:fontFamily="@font/poppins_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/statusIcon"
                 app:layout_constraintTop_toTopOf="@+id/statusIcon" />
@@ -49,6 +55,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/last_challenge_time"
                 android:textSize="14sp"
+                android:fontFamily="@font/poppins_light"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/statusIcon"
@@ -62,15 +69,16 @@
         android:id="@+id/streakCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="1dp"
+        android:background="@drawable/card_background_premium"
         app:layout_constraintTop_toBottomOf="@+id/statusCard">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="20dp">
 
             <ImageView
                 android:id="@+id/streakIcon"
@@ -89,6 +97,7 @@
                 android:text="@string/current_streak"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/poppins_medium"
                 app:layout_constraintStart_toEndOf="@+id/streakIcon"
                 app:layout_constraintTop_toTopOf="@+id/streakIcon" />
 
@@ -99,8 +108,9 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:text="0 days"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/streakIcon"
                 app:layout_constraintTop_toBottomOf="@+id/streakLabel" />
@@ -113,15 +123,16 @@
         android:id="@+id/blockedAppsCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="1dp"
+        android:background="@drawable/card_background_premium"
         app:layout_constraintTop_toBottomOf="@+id/streakCard">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="20dp">
 
             <TextView
                 android:id="@+id/blockedAppsLabel"
@@ -130,6 +141,7 @@
                 android:text="@string/blocked_apps_label"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/poppins_medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -146,7 +158,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
+                    android:fontFamily="@font/poppins_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -158,6 +171,7 @@
                     android:layout_marginTop="4dp"
                     android:text=""
                     android:textSize="14sp"
+                    android:fontFamily="@font/poppins_light"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/blockedAppsCount" />
@@ -171,6 +185,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/no_blocked_apps"
                 android:textSize="14sp"
+                android:fontFamily="@font/poppins_light"
                 android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/blockedAppsLabel" />
@@ -183,11 +198,13 @@
         android:id="@+id/startChallengeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="36dp"
         android:backgroundTint="@color/colorPrimary"
-        android:padding="16dp"
+        android:padding="18dp"
         android:text="@string/start_challenge"
         android:textSize="16sp"
+        android:fontFamily="@font/poppins_medium"
+        android:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
